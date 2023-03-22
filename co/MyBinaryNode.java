@@ -1,6 +1,7 @@
 package co;
 
 public class MyBinaryNode<K extends Comparable<K>> {
+	private static boolean flag = false;
 	INode<K> root;
 
 	public void add(K key) {
@@ -33,7 +34,7 @@ public class MyBinaryNode<K extends Comparable<K>> {
 		}
 	}
 
-	public void addRecursively(INode node) {
+	public void addRecursively(INode<K> node) {
 		if (root == null) {
 			System.out.println("Tree is empty");
 			return;
@@ -43,6 +44,23 @@ public class MyBinaryNode<K extends Comparable<K>> {
 			System.out.print(node.key + " ");
 			if (node.right != null)
 				addRecursively(node.right);
+		}
+	}
+
+	public void nodeSearch(INode temp ,K val) {
+		if (root == null) {
+			System.out.println("Tree is empty");
+		} else {
+			if (temp.key == val) {
+				flag = true;
+				return;
+			}
+			if (flag == false && temp.left != null) {
+				nodeSearch(temp.left, val);
+			}
+			if (flag == false && temp.right != null) {
+				nodeSearch(temp.right, val);
+			}
 		}
 	}
 
@@ -65,5 +83,13 @@ public class MyBinaryNode<K extends Comparable<K>> {
 
 		System.out.println("After adding node : ");
 		binaryTree.addRecursively(binaryTree.root);
+		
+		binaryTree.nodeSearch(binaryTree.root ,63);
+
+		if(flag) {
+			System.out.println("\nNode is present");
+		}else {
+			System.out.println("\nNode is not present !");
+		}
 	}
 }
